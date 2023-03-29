@@ -1,0 +1,39 @@
+{
+  "name" : "DataLoad",
+  "description" : "",
+  "role" : "arn:aws:iam::742789466210:role/GlueAccess",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-742789466210-us-west-2/scripts/DataLoad.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-742789466210-us-west-2/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-742789466210-us-west-2/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "3.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://bcempron-gluebucket/test/WA_Fn-UseC_-Telco-Customer-Churn.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"S3 bucket\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"customerID\",\"Type\":\"string\"},{\"Name\":\"gender\",\"Type\":\"string\"},{\"Name\":\"SeniorCitizen\",\"Type\":\"string\"},{\"Name\":\"Partner\",\"Type\":\"string\"},{\"Name\":\"Dependents\",\"Type\":\"string\"},{\"Name\":\"tenure\",\"Type\":\"string\"},{\"Name\":\"PhoneService\",\"Type\":\"string\"},{\"Name\":\"MultipleLines\",\"Type\":\"string\"},{\"Name\":\"InternetService\",\"Type\":\"string\"},{\"Name\":\"OnlineSecurity\",\"Type\":\"string\"},{\"Name\":\"OnlineBackup\",\"Type\":\"string\"},{\"Name\":\"DeviceProtection\",\"Type\":\"string\"},{\"Name\":\"TechSupport\",\"Type\":\"string\"},{\"Name\":\"StreamingTV\",\"Type\":\"string\"},{\"Name\":\"StreamingMovies\",\"Type\":\"string\"},{\"Name\":\"Contract\",\"Type\":\"string\"},{\"Name\":\"PaperlessBilling\",\"Type\":\"string\"},{\"Name\":\"PaymentMethod\",\"Type\":\"string\"},{\"Name\":\"MonthlyCharges\",\"Type\":\"string\"},{\"Name\":\"TotalCharges\",\"Type\":\"string\"},{\"Name\":\"Churn\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://bcempron-gluebucket\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-2\":{\"ApplyMapping\":{\"Inputs\":[\"node-1\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"customerID\"],\"FromType\":\"string\",\"ToKey\":\"customerID\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"gender\"],\"FromType\":\"string\",\"ToKey\":\"gender\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"SeniorCitizen\"],\"FromType\":\"string\",\"ToKey\":\"SeniorCitizen\",\"ToType\":\"tinyint\"},{\"Dropped\":false,\"FromPath\":[\"Partner\"],\"FromType\":\"string\",\"ToKey\":\"Partner\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Dependents\"],\"FromType\":\"string\",\"ToKey\":\"Dependents\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"tenure\"],\"FromType\":\"string\",\"ToKey\":\"tenure\",\"ToType\":\"int\"},{\"Dropped\":false,\"FromPath\":[\"PhoneService\"],\"FromType\":\"string\",\"ToKey\":\"PhoneService\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"MultipleLines\"],\"FromType\":\"string\",\"ToKey\":\"MultipleLines\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"InternetService\"],\"FromType\":\"string\",\"ToKey\":\"InternetService\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"OnlineSecurity\"],\"FromType\":\"string\",\"ToKey\":\"OnlineSecurity\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"OnlineBackup\"],\"FromType\":\"string\",\"ToKey\":\"OnlineBackup\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"DeviceProtection\"],\"FromType\":\"string\",\"ToKey\":\"DeviceProtection\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"TechSupport\"],\"FromType\":\"string\",\"ToKey\":\"TechSupport\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"StreamingTV\"],\"FromType\":\"string\",\"ToKey\":\"StreamingTV\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"StreamingMovies\"],\"FromType\":\"string\",\"ToKey\":\"StreamingMovies\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Contract\"],\"FromType\":\"string\",\"ToKey\":\"Contract\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"PaperlessBilling\"],\"FromType\":\"string\",\"ToKey\":\"PaperlessBilling\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"PaymentMethod\"],\"FromType\":\"string\",\"ToKey\":\"PaymentMethod\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"MonthlyCharges\"],\"FromType\":\"string\",\"ToKey\":\"MonthlyCharges\",\"ToType\":\"decimal\"},{\"Dropped\":false,\"FromPath\":[\"TotalCharges\"],\"FromType\":\"string\",\"ToKey\":\"TotalCharges\",\"ToType\":\"decimal\"},{\"Dropped\":false,\"FromPath\":[\"Churn\"],\"FromType\":\"string\",\"ToKey\":\"Churn\",\"ToType\":\"string\"}],\"Name\":\"ApplyMapping\"}},\"node-3\":{\"RedshiftTarget\":{\"Database\":\"sampledb\",\"Inputs\":[\"node-2\"],\"Name\":\"Redshift Cluster\",\"RedshiftTmpDir\":\"\",\"Table\":\"test\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "glue-test",
+    "branch" : "develop",
+    "folder" : "DataLoad"
+  }
+}
